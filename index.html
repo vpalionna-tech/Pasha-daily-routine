@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English A1 Lesson 2: Time & Daily Routine</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@600;700&display=swap" rel="stylesheet">
+    <!-- Tone.js для звукових відгуків -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0f172a;
+            background-image: radial-gradient(circle at 15% 15%, rgba(99, 102, 241, 0.1), transparent 40%),
+                              radial-gradient(circle at 85% 85%, rgba(16, 185, 129, 0.08), transparent 40%);
+            color: #f1f5f9;
+            min-height: 100vh;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .mono-font {
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .btn-active:active {
+            transform: scale(0.97);
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade {
+            animation: fadeIn 0.25s ease-out forwards;
+        }
+    </style>
+</head>
+<body class="p-3 sm:p-6 flex flex-col items-center justify-between">
+
+    <!-- ВЕРХНЯ ПАНЕЛЬ НАВІГАЦІЇ -->
+    <header class="w-full max-w-5xl bg-slate-800/90 backdrop-blur-md border border-slate-700 rounded-2xl p-4 shadow-xl mb-6 flex flex-wrap items-center justify-between gap-4">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-500 to-cyan-400 flex items-center justify-center text-slate-950 font-extrabold text-lg shadow">
+                A1
+            </div>
+            <div>
+                <h1 class="text-base sm:text-lg font-extrabold text-white leading-tight">Lesson 2: Time & Daily Routine</h1>
+                <p class="text-xs text-slate-400">Інтерактивний урок • 60 хв • Adult Beginner</p>
+            </div>
+        </div>
+
+        <!-- Вкладки 5 етапів уроку -->
+        <nav class="flex flex-wrap gap-1.5 bg-slate-900 p-1.5 rounded-xl border border-slate-700">
+            <button onclick="switchTab('warmup')" id="tab-warmup" class="px-3 py-1.5 rounded-lg font-semibold text-xs sm:text-sm transition bg-indigo-600 text-white shadow">
+                1. Розминка
+            </button>
+            <button onclick="switchTab('vocab')" id="tab-vocab" class="px-3 py-1.5 rounded-lg font-semibold text-xs sm:text-sm transition text-slate-300 hover:bg-slate-800">
+                2. Час (AT) & Рутина
+            </button>
+            <button onclick="switchTab('reading')" id="tab-reading" class="px-3 py-1.5 rounded-lg font-semibold text-xs sm:text-sm transition text-slate-300 hover:bg-slate-800">
+                3. Читання
+            </button>
+            <button onclick="switchTab('practice')" id="tab-practice" class="px-3 py-1.5 rounded-lg font-semibold text-xs sm:text-sm transition text-slate-300 hover:bg-slate-800">
+                4. Практика речень
+            </button>
+            <button onclick="switchTab('speaking')" id="tab-speaking" class="px-3 py-1.5 rounded-lg font-semibold text-xs sm:text-sm transition text-slate-300 hover:bg-slate-800">
+                5. Speaking: Мій день
+            </button>
+        </nav>
+
+        <!-- Лічильник балів -->
+        <div class="flex items-center gap-2 bg-slate-900 px-3 py-1.5 rounded-xl border border-slate-700">
+            <span class="text-xs text-slate-400 font-medium">Бали:</span>
+            <span id="score-display" class="text-sm sm:text-base font-extrabold text-cyan-400">0</span>
+        </div>
+    </header>
+
+    <!-- ОСНОВНА РОБОЧА ОБЛАСТЬ -->
+    <main class="w-full max-w-5xl flex-grow flex flex-col items-center">
+
+        <!-- ========================================================= -->
+        <!-- ВКЛАДКА 1: WARM-UP (ПОВТОРЕННЯ ДНІВ ТИЖНЯ ТА ДОЗВІЛЛЯ) -->
+        <!-- ========================================================= -->
+        <section id="sec-warmup" class="w-full space-y-6 animate-fade">
+            <div class="bg-slate-800/90 border border-slate-700 rounded-2xl p-5 sm:p-7 shadow-xl">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-700 pb-4 mb-5">
+                    <div>
+                        <span class="px-2.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 text-xs font-bold">Warm-up • 5–7 хв</span>
+                        <h2 class="text-xl sm:text-2xl font-extrabold text-white mt-1">Бліц-повторення минулого уроку 🔥</h2>
+                        <p class="text-xs sm:text-sm text-slate-400">Відповідай повними реченнями, використовуючи <strong class="text-emerald-400">on + день тижня</strong>.</p>
+                    </div>
+                    <button onclick="shuffleWarmup()" class="px-4 py-2 bg-slate-700 hover:bg-slate-600 text-white font-semibold rounded-xl text-xs sm:text-sm shrink-0 btn-active">
+                        🔄 Інші запитання
+                    </button>
+                </div>
+
+                <!-- Картки швидких запитань -->
+                <div id="warmup-cards" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Генерується JS -->
+                </div>
+
+                <!-- Швидкий тренажер прийменників IN / ON -->
+                <div class="mt-6 bg-slate-900/90 border border-slate-700 rounded-xl p-4 sm:p-5">
+                    <h3 class="text-sm font-bold uppercase tracking-wider text-amber-400 mb-2">⚡ Міні-чек: Прийменники IN чи ON?</h3>
+                    <p class="text-xs text-slate-400 mb-3">Обери правильний прийменник для кожного слова (пори року/місяці vs дні тижня):</p>
+                    <div id="prep-blitz-grid" class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+                        <!-- Генерується JS -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================================= -->
+        <!-- ВКЛАДКА 2: ЧАС (AT + ГОДИНИ) ТА ЩОДЕННА РУТИНА -->
+        <!-- ========================================================= -->
+        <section id="sec-vocab" class="w-full hidden space-y-6 animate-fade">
+            
+            <!-- Інтерактивний годинник + правило AT -->
+            <div class="bg-slate-800/90 border border-slate-700 rounded-2xl p-5 sm:p-6 shadow-xl">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+                    <div class="lg:col-span-6 space-y-3">
+                        <span class="px-2.5 py-0.5 rounded bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 text-xs font-bold">Нове правило часу</span>
+                        <h2 class="text-xl sm:text-2xl font-extrabold text-white">Точний час = прийменник <span class="text-cyan-400 underline">AT</span></h2>
+                        <ul class="space-y-2 text-sm text-slate-300">
+                            <li>🕒 <strong>7:00</strong> — <span class="text-white font-bold">at seven o'clock</span> (рівно о сьомій)</li>
+                            <li>🕢 <strong>7:30</strong> — <span class="text-white font-bold">at seven thirty</span> або <span class="text-white font-bold">at half past seven</span></li>
+                            <li>🕘 <strong>9:15</strong> — <span class="text-white font-bold">at nine fifteen</span> (найпростіший сучасний спосіб!)</li>
+                            <li>🌙 <strong>Ніч / Опівночі</strong> — <span class="text-white font-bold">at night / at midnight</span></li>
+                        </ul>
+                        <div class="bg-slate-900 p-3 rounded-xl border border-slate-700 text-xs text-amber-300">
+                            💡 <strong>Порівняй усі 3 прийменники:</strong><br>
+                            • <strong>IN</strong> July / in summer / in the morning (великі періоди)<br>
+                            • <strong>ON</strong> Monday / on Friday evening (дні тижня)<br>
+                            • <strong>AT</strong> 8:00 / at 10:30 / at night (точний час)
+                        </div>
+                    </div>
+
+                    <!-- Інтерактивний перемикач часу -->
+                    <div class="lg:col-span-6 bg-slate-900 border border-slate-700 rounded-2xl p-5 text-center">
+                        <span class="text-xs text-slate-400 uppercase font-bold">Потренуйся називати час (клікай на кнопки):</span>
+                        <div id="clock-display" class="mono-font text-4xl sm:text-5xl font-extrabold text-cyan-400 my-4 tracking-wider">
+                            08:00
+                        </div>
+                        <div id="clock-text-en" class="text-lg sm:text-xl font-bold text-white mb-1">
+                            at eight o'clock
+                        </div>
+                        <div id="clock-example" class="text-xs text-slate-400 italic mb-4">
+                            "I wake up at eight o'clock."
+                        </div>
+                        <div class="flex flex-wrap justify-center gap-2">
+                            <button onclick="setClock('07:00', 'at seven o’clock', 'I wake up at seven o’clock.')" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 rounded-lg text-xs font-bold border border-slate-600">07:00</button>
+                            <button onclick="setClock('08:30', 'at eight thirty / half past eight', 'I drink coffee at eight thirty.')" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 rounded-lg text-xs font-bold border border-slate-600">08:30</button>
+                            <button onclick="setClock('10:00', 'at ten o’clock', 'I start work at ten o’clock.')" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 rounded-lg text-xs font-bold border border-slate-600">10:00</button>
+                            <button onclick="setClock('13:15', 'at one fifteen (1:15 PM)', 'I have lunch at one fifteen.')" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 rounded-lg text-xs font-bold border border-slate-600">13:15</button>
+                            <button onclick="setClock('18:30', 'at six thirty (6:30 PM)', 'I finish work at six thirty.')" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 rounded-lg text-xs font-bold border border-slate-600">18:30</button>
+                            <button onclick="setClock('23:00', 'at eleven o’clock at night', 'I go to sleep at eleven o’clock.')" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 rounded-lg text-xs font-bold border border-slate-600">23:00</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Сітка нових дієслів щоденної рутини -->
+            <div>
+                <h3 class="text-sm font-bold uppercase tracking-wider text-slate-400 mb-3">⚡ Щоденна рутина (Daily Routine Verbs — натискай для озвучки)</h3>
+                <div id="routine-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
+                    <!-- Генерується JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================================= -->
+        <!-- ВКЛАДКА 3: ЧИТАННЯ (WORKDAY VS WEEKEND) -->
+        <!-- ========================================================= -->
+        <section id="sec-reading" class="w-full hidden space-y-6 animate-fade">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                
+                <!-- Текст (7 колонок) -->
+                <div class="lg:col-span-7 bg-slate-800/90 border border-slate-700 rounded-2xl p-5 sm:p-7 shadow-lg flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="px-3 py-1 rounded-full bg-indigo-500/20 text-indigo-300 text-xs font-bold">Reading • Alex, 24 y.o.</span>
+                            <button onclick="speakReading()" class="px-3.5 py-1.5 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold rounded-xl text-xs flex items-center gap-1.5 btn-active">
+                                🔊 Озвучити текст
+                            </button>
+                        </div>
+                        <h2 class="text-xl sm:text-2xl font-extrabold text-white mb-4">My Monday vs. My Saturday</h2>
+                        <div id="reading-text" class="space-y-3 text-slate-200 text-sm sm:text-base leading-relaxed">
+                            <p>Hi! I am Alex. My Monday and my Saturday are very different!</p>
+                            <p><span class="text-emerald-400 font-semibold">On Monday</span>, I <span class="text-cyan-300 font-semibold">wake up</span> <span class="text-amber-300 font-semibold">at 7:30</span> in the morning. I take a shower and drink black coffee, because I don't eat breakfast early. I <span class="text-cyan-300 font-semibold">start work</span> <span class="text-amber-300 font-semibold">at 9:00</span>.</p>
+                            <p><span class="text-amber-300 font-semibold">At 1:00</span> in the afternoon, I <span class="text-cyan-300 font-semibold">have lunch</span> with my colleagues. I usually eat chicken, rice, and a vegetable salad. I <span class="text-cyan-300 font-semibold">finish work</span> <span class="text-amber-300 font-semibold">at 6:00</span>. In the evening, I go to the gym and <span class="text-cyan-300 font-semibold">go to sleep</span> <span class="text-amber-300 font-semibold">at 11:30</span>.</p>
+                            <p><span class="text-emerald-400 font-semibold">On Saturday</span>, I don't work! I wake up <span class="text-amber-300 font-semibold">at 10:30</span>. I have got a lot of free time. I cook a big breakfast with eggs and tomatoes, play video games, and meet my friends <span class="text-amber-300 font-semibold">at 7:00</span> in the evening.</p>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 pt-4 border-t border-slate-700 text-xs text-slate-400">
+                        💡 Зверни увагу на кольори: <span class="text-emerald-400">зелений</span> — дні тижня (on), <span class="text-amber-300">жовтий</span> — точний час (at), <span class="text-cyan-300">блакитний</span> — нові дії.
+                    </div>
+                </div>
+
+                <!-- Запитання для обговорення (5 колонок) -->
+                <div class="lg:col-span-5 bg-slate-800/90 border border-slate-700 rounded-2xl p-5 sm:p-6 shadow-lg">
+                    <h3 class="text-lg font-extrabold text-white mb-1">💬 Запитання до тексту</h3>
+                    <p class="text-xs text-slate-400 mb-4">Прочитай запитання та дай повну відповідь англійською. Натисни на підказку, якщо потрібна схема речення.</p>
+                    
+                    <div id="reading-q-list" class="space-y-3">
+                        <!-- Генерується JS -->
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ========================================================= -->
+        <!-- ВКЛАДКА 4: ПРАКТИКА РЕЧЕНЬ (3 ІНТЕРАКТИВНІ РЕЖИМИ) -->
+        <!-- ========================================================= -->
+        <section id="sec-practice" class="w-full hidden animate-fade">
+            <div class="bg-slate-800/90 border border-slate-700 rounded-2xl p-5 sm:p-8 shadow-xl max-w-3xl mx-auto">
+                
+                <!-- Перемикач підрежимів практики -->
+                <div class="flex flex-wrap justify-between items-center gap-2 mb-6 pb-4 border-b border-slate-700">
+                    <div class="flex flex-wrap gap-2">
+                        <button onclick="switchPracticeTab('unscramble')" id="ptab-unscramble" class="px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold bg-indigo-600 text-white">
+                            🧩 1. Збери речення
+                        </button>
+                        <button onclick="switchPracticeTab('preps')" id="ptab-preps" class="px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold bg-slate-900 text-slate-300 hover:bg-slate-700">
+                            🎯 2. IN / ON / AT
+                        </button>
+                        <button onclick="switchPracticeTab('prompts')" id="ptab-prompts" class="px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold bg-slate-900 text-slate-300 hover:bg-slate-700">
+                            ✍️ 3. Речення про себе
+                        </button>
+                    </div>
+                    <span id="practice-counter" class="text-xs font-bold text-slate-400">1 / 7</span>
+                </div>
+
+                <!-- ПІДРЕЖИМ 1: ЗБЕРИ РЕЧЕННЯ (UNSCRAMBLE) -->
+                <div id="pview-unscramble" class="space-y-5">
+                    <div class="bg-slate-900 rounded-xl p-4 border border-slate-700 text-center">
+                        <span class="text-xs text-slate-400 uppercase font-bold">Склади правильне речення (Хто + Дія + Де/Що + Час/День):</span>
+                        <h3 id="uns-ua" class="text-lg sm:text-xl font-bold text-white mt-1">
+                            Я прокидаюся о 7:30 у понеділок.
+                        </h3>
+                    </div>
+
+                    <div id="uns-drop" class="min-h-[64px] bg-slate-950 rounded-xl p-3 border-2 border-dashed border-slate-600 flex flex-wrap items-center gap-2">
+                        <span class="text-slate-500 text-sm">Натискай на блоки слів знизу...</span>
+                    </div>
+
+                    <div id="uns-bank" class="flex flex-wrap justify-center gap-2">
+                        <!-- Слова -->
+                    </div>
+
+                    <div class="flex justify-center gap-3 pt-2">
+                        <button onclick="resetUns()" class="px-4 py-2.5 bg-slate-700 hover:bg-slate-600 text-slate-200 font-semibold rounded-xl text-xs sm:text-sm">
+                            🔄 Очистити
+                        </button>
+                        <button onclick="checkUns()" class="px-6 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl text-sm shadow btn-active">
+                            ✅ Перевірити
+                        </button>
+                    </div>
+
+                    <div id="uns-feedback" class="hidden p-3.5 rounded-xl text-center text-sm font-bold"></div>
+                </div>
+
+                <!-- ПІДРЕЖИМ 2: ТРЕНАЖЕР ПРИЙМЕННИКІВ IN / ON / AT У КОНТЕКСТІ -->
+                <div id="pview-preps" class="hidden space-y-5">
+                    <div class="bg-slate-900 rounded-xl p-5 border border-slate-700 text-center">
+                        <span class="text-xs text-cyan-400 uppercase font-bold">Обери правильний прийменник часу:</span>
+                        <h3 id="prep-sentence" class="text-xl sm:text-2xl font-extrabold text-white my-3">
+                            I finish work <span class="text-amber-400 underline">___</span> 6:00 PM.
+                        </h3>
+                        <p id="prep-ua" class="text-xs text-slate-400">Я закінчую роботу о 18:00.</p>
+                    </div>
+
+                    <div class="grid grid-cols-3 gap-3 max-w-md mx-auto">
+                        <button onclick="checkPrepChoice('in')" class="py-3.5 bg-slate-900 hover:bg-slate-700 border-2 border-slate-600 rounded-xl font-extrabold text-lg text-white btn-active">IN</button>
+                        <button onclick="checkPrepChoice('on')" class="py-3.5 bg-slate-900 hover:bg-slate-700 border-2 border-slate-600 rounded-xl font-extrabold text-lg text-white btn-active">ON</button>
+                        <button onclick="checkPrepChoice('at')" class="py-3.5 bg-slate-900 hover:bg-slate-700 border-2 border-slate-600 rounded-xl font-extrabold text-lg text-white btn-active">AT</button>
+                    </div>
+
+                    <div id="prep-feedback" class="hidden p-3.5 rounded-xl text-center text-sm font-bold"></div>
+                </div>
+
+                <!-- ПІДРЕЖИМ 3: СКЛАДИ РЕЧЕННЯ ЗА ОПОРНИМИ СЛОВАМИ -->
+                <div id="pview-prompts" class="hidden space-y-5">
+                    <div class="bg-slate-900 rounded-xl p-5 border border-slate-700 text-center">
+                        <span class="text-xs text-amber-400 uppercase font-bold">Склади правдиве речення про себе з цими словами:</span>
+                        <div id="prompt-chips" class="flex flex-wrap justify-center gap-3 my-4">
+                            <!-- Підказки -->
+                        </div>
+                        <p class="text-xs text-slate-400">Скажи речення вголос викладачу або запиши його нижче.</p>
+                    </div>
+
+                    <input type="text" id="prompt-input" placeholder="Наприклад: I wake up at 8:00 on Monday..." 
+                        class="w-full bg-slate-950 border border-slate-600 focus:border-indigo-500 rounded-xl px-4 py-3 text-sm sm:text-base text-white focus:outline-none">
+
+                    <div class="flex flex-wrap justify-between items-center gap-3">
+                        <button onclick="togglePromptExample()" class="px-4 py-2 bg-slate-700 hover:bg-slate-600 text-slate-200 font-semibold rounded-xl text-xs">
+                            👀 Приклад відповіді
+                        </button>
+                        <button onclick="nextPrompt()" class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-xl text-sm btn-active">
+                            Наступне завдання →
+                        </button>
+                    </div>
+
+                    <div id="prompt-example" class="hidden bg-slate-900 border border-emerald-500/40 rounded-xl p-4 text-sm text-emerald-300"></div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ========================================================= -->
+        <!-- ВКЛАДКА 5: SPEAKING PRODUCTION (МІЙ РОБОЧИЙ ДЕНЬ VS ВИХІДНИЙ) -->
+        <!-- ========================================================= -->
+        <section id="sec-speaking" class="w-full hidden space-y-6 animate-fade">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                
+                <!-- Конструктор розпорядку дня (7 колонок) -->
+                <div class="lg:col-span-7 bg-slate-800/90 border border-slate-700 rounded-2xl p-5 sm:p-6 shadow-xl">
+                    <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+                        <div>
+                            <h2 class="text-lg sm:text-xl font-extrabold text-white">⏱️ Конструктор мого дня</h2>
+                            <p class="text-xs text-slate-400">Обери час для кожної дії та розкажи про свій день:</p>
+                        </div>
+                        <!-- Перемикач Будній день / Вихідний -->
+                        <div class="flex bg-slate-900 p-1 rounded-xl border border-slate-700">
+                            <button onclick="setScheduleDay('Monday')" id="sday-Monday" class="px-3 py-1 rounded-lg text-xs font-bold bg-indigo-600 text-white">On Monday</button>
+                            <button onclick="setScheduleDay('Saturday')" id="sday-Saturday" class="px-3 py-1 rounded-lg text-xs font-bold text-slate-400 hover:text-white">On Saturday</button>
+                        </div>
+                    </div>
+
+                    <div id="schedule-rows" class="space-y-2.5">
+                        <!-- Генерується JS -->
+                    </div>
+
+                    <div class="mt-5 bg-slate-950 border border-slate-700 rounded-xl p-4">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-xs font-bold uppercase text-cyan-400">Твоя опора для розповіді:</span>
+                            <button onclick="speakScheduleStory()" class="text-xs bg-slate-800 hover:bg-slate-700 text-white px-2.5 py-1 rounded-lg">🔊 Послухати</button>
+                        </div>
+                        <p id="schedule-story" class="text-sm text-slate-200 leading-relaxed italic"></p>
+                    </div>
+                </div>
+
+                <!-- Картки інтерв'ю + Рольова гра (5 колонок) -->
+                <div class="lg:col-span-5 space-y-6">
+                    
+                    <!-- Генератор запитань для діалогу -->
+                    <div class="bg-slate-800/90 border border-slate-700 rounded-2xl p-5 shadow-xl">
+                        <span class="px-2.5 py-0.5 rounded bg-cyan-500/20 text-cyan-300 text-xs font-bold">Interview Practice</span>
+                        <h3 class="text-lg font-extrabold text-white mt-2 mb-1">🎙️ Запитання про твій графік</h3>
+                        <p class="text-xs text-slate-400 mb-4">Дай розгорнуту відповідь (використовуй <strong>at + час</strong> та <strong>on + день</strong>):</p>
+                        
+                        <div class="bg-slate-900 border border-slate-700 rounded-xl p-4 min-h-[100px] flex flex-col justify-center items-center text-center mb-4">
+                            <p id="int-q-en" class="text-base sm:text-lg font-bold text-white">What time do you usually wake up on Monday?</p>
+                            <p id="int-q-ua" class="text-xs text-slate-400 mt-1">О котрій годині ти зазвичай прокидаєшся у понеділок?</p>
+                        </div>
+
+                        <div class="flex gap-2">
+                            <button onclick="speakCurrentIntQ()" class="px-3.5 py-2.5 bg-slate-700 hover:bg-slate-600 text-white rounded-xl text-sm font-semibold">🔊</button>
+                            <button onclick="nextIntQ()" class="flex-grow py-2.5 bg-cyan-600 hover:bg-cyan-500 text-white font-bold rounded-xl text-sm btn-active">
+                                Наступне запитання →
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Завдання: Знайди 3 відмінності / Порівняй дні -->
+                    <div class="bg-slate-800/90 border border-slate-700 rounded-2xl p-5 shadow-xl">
+                        <h3 class="text-base font-extrabold text-amber-400 mb-1">🆚 Челендж: Будні vs Вихідні</h3>
+                        <p class="text-xs text-slate-300 leading-relaxed mb-3">
+                            Скажи 3 пари речень, порівнюючи свій робочий день і вихідний за зразком:
+                        </p>
+                        <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-700 text-xs text-slate-300 space-y-1.5">
+                            <div>• <em>"On Monday, I wake up at 7:30, <strong class="text-amber-300">but</strong> on Sunday, I wake up at 10:00."</em></div>
+                            <div>• <em>"On Wednesday, I work, <strong class="text-amber-300">but</strong> on Saturday, I meet friends."</em></div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="w-full max-w-5xl text-center mt-8 text-slate-500 text-xs">
+        <p>💡 Домашнє завдання: запиши голосове повідомлення або напиши 6–8 речень про свій типовий робочий день та суботу (використовуючи <strong>on</strong> та <strong>at</strong>).</p>
+    </footer>
+
+    <script>
+        // ==========================================
+        // 1. ДАНІ УРОКУ 2
+        // ==========================================
+        const warmupPool = [
+            { en: 'What is your favourite day of the week and why?', ua: 'Який твій улюблений день тижня і чому?', hint: 'My favourite day is ... because on ... I ...' },
+            { en: 'What do you usually do on Friday evening?', ua: 'Що ти зазвичай робиш у п’ятницю ввечері?', hint: 'On Friday evening, I usually ...' },
+            { en: 'Do you cook dinner on Tuesday or order food?', ua: 'Ти готуєш вечерю у вівторок чи замовляєш їжу?', hint: 'On Tuesday, I cook ... / I don’t cook, I order ...' },
+            { en: 'What do you like to eat and drink on weekends?', ua: 'Що ти любиш їсти і пити на вихідних?', hint: 'On weekends, I like to eat ... and drink ...' },
+            { en: 'Have you got free time on Wednesday?', ua: 'У тебе є вільний час у середу?', hint: 'Yes, I have got free time on Wednesday. / No, I work on Wednesday.' },
+            { en: 'When do you go to the gym or go for a walk?', ua: 'Коли ти ходиш у спортзал або на прогулянку?', hint: 'I go to the gym on ... / I go for a walk on ...' }
+        ];
+
+        const prepBlitzItems = [
+            { word: 'Monday', correct: 'ON' },
+            { word: 'July', correct: 'IN' },
+            { word: 'weekends', correct: 'ON' },
+            { word: 'summer', correct: 'IN' },
+            { word: 'Friday evening', correct: 'ON' },
+            { word: 'October', correct: 'IN' },
+            { word: 'Sunday', correct: 'ON' },
+            { word: 'winter', correct: 'IN' }
+        ];
+
+        const routineVerbs = [
+            { en: 'wake up', ua: 'прокидатися', icon: '⏰', ex: 'I wake up at 7:30.' },
+            { en: 'take a shower', ua: 'приймати душ', icon: '🚿', ex: 'I take a shower in the morning.' },
+            { en: 'have breakfast', ua: 'снідати', icon: '🍳', ex: 'I have breakfast at 8:00.' },
+            { en: 'start work', ua: 'починати роботу', icon: '💻', ex: 'I start work at 9:30.' },
+            { en: 'have lunch', ua: 'обідати', icon: '🥗', ex: 'I have lunch at 1:00 PM.' },
+            { en: 'finish work', ua: 'закінчувати роботу', icon: '🏁', ex: 'I finish work at 6:00.' },
+            { en: 'go home', ua: 'йти / їхати додому', icon: '🏠', ex: 'I go home at 6:30.' },
+            { en: 'go to sleep', ua: 'лягати спати', icon: '😴', ex: 'I go to sleep at 11:30.' }
+        ];
+
+        const readingQs = [
+            { q: '1. What time does Alex wake up on Monday and on Saturday?', hint: 'On Monday, he wakes up at ... On Saturday, he wakes up at ...' },
+            { q: '2. Does Alex eat breakfast on Monday? What does he drink?', hint: 'No, he doesn’t eat breakfast. He drinks ...' },
+            { q: '3. What time does he have lunch and what does he eat?', hint: 'He has lunch at ... He eats ...' },
+            { q: '4. What does Alex do on Monday evening after work?', hint: 'After work, he goes to ... and goes to sleep at ...' },
+            { q: '5. And you? What time do you wake up and finish work?', hint: 'I wake up at ... and I finish work at ...' }
+        ];
+
+        const unscrambleList = [
+            { ua: 'Я прокидаюся о 7:30 у понеділок.', words: ['I', 'wake up', 'at 7:30', 'on Monday.'] },
+            { ua: 'Ми починаємо роботу о 9:00 ранку.', words: ['We', 'start work', 'at 9:00', 'in the morning.'] },
+            { ua: 'Він обідає о 1:30 дня.', words: ['He', 'has lunch', 'at 1:30', 'in the afternoon.'] },
+            { ua: 'Я не працюю в суботу ввечері.', words: ['I', "don't work", 'on Saturday evening.'] },
+            { ua: 'Вони закінчують роботу о 6:00 і йдуть додому.', words: ['They', 'finish work', 'at 6:00', 'and go home.'] },
+            { ua: 'Я лягаю спати об 11:00 вночі.', words: ['I', 'go to sleep', 'at 11:00', 'at night.'] },
+            { ua: 'О котрій годині ти снідаєш?', words: ['What time', 'do you', 'have breakfast?'] }
+        ];
+
+        const prepPracticeList = [
+            { before: 'I wake up', after: '8:00 AM.', ua: 'Я прокидаюся о 8:00 ранку.', ans: 'at' },
+            { before: 'We meet friends', after: 'Friday evening.', ua: 'Ми зустрічаємося з друзями у п’ятницю ввечері.', ans: 'on' },
+            { before: 'My birthday is', after: 'August.', ua: 'Мій день народження у серпні.', ans: 'in' },
+            { before: 'He finishes work', after: '6:30 PM.', ua: 'Він закінчує роботу о 18:30.', ans: 'at' },
+            { before: 'I don’t work', after: 'weekends.', ua: 'Я не працюю на вихідних.', ans: 'on' },
+            { before: 'I go to sleep', after: 'midnight.', ua: 'Я лягаю спати опівночі.', ans: 'at' },
+            { before: 'We like to travel', after: 'summer.', ua: 'Ми любимо подорожувати влітку.', ans: 'in' }
+        ];
+
+        const promptPracticeList = [
+            { chips: ['⏰ wake up', '🕒 at [time]', '📅 on Monday'], ex: 'I wake up at 8:00 on Monday.' },
+            { chips: ['🍳 have breakfast', '☕ coffee / tea', '🕒 at [time]'], ex: 'I have breakfast and drink coffee at 8:30.' },
+            { chips: ['💻 start work / finish work', '🕒 at [time]'], ex: 'I start work at 10:00 and finish work at 7:00.' },
+            { chips: ['🥗 have lunch', '🍗 meat / vegetables / pizza', '🕒 at [time]'], ex: 'I have lunch at 2:00. I usually eat meat and vegetables.' },
+            { chips: ['📅 on Sunday', '😴 wake up', '🎮 free time'], ex: 'On Sunday, I wake up at 10:30 and play video games.' }
+        ];
+
+        const interviewQs = [
+            { en: 'What time do you usually wake up on Monday?', ua: 'О котрій годині ти зазвичай прокидаєшся у понеділок?' },
+            { en: 'What time do you wake up on Sunday?', ua: 'О котрій годині ти прокидаєшся у неділю?' },
+            { en: 'What do you usually have for breakfast and at what time?', ua: 'Що ти зазвичай їси на сніданок і о котрій годині?' },
+            { en: 'What time do you start and finish work?', ua: 'О котрій годині ти починаєш і закінчуєш роботу?' },
+            { en: 'What do you do after work on Wednesday?', ua: 'Що ти робиш після роботи в середу?' },
+            { en: 'What time do you usually go to sleep?', ua: 'О котрій годині ти зазвичай лягаєш спати?' }
+        ];
+
+        // ==========================================
+        // 2. СТАН ДОДАТКУ
+        // ==========================================
+        let score = 0;
+        let warmupOffset = 0;
+
+        let practiceSubTab = 'unscramble';
+        let unsIdx = 0;
+        let selectedUns = [];
+        let bankUns = [];
+
+        let prepIdx = 0;
+        let promptIdx = 0;
+
+        let scheduleDay = 'Monday';
+        const scheduleTimes = {
+            wake: '7:30',
+            breakfast: '8:00',
+            start: '9:00',
+            lunch: '1:00 PM',
+            finish: '6:00 PM',
+            sleep: '11:30 PM'
+        };
+
+        let intQIdx = 0;
+
+        // ==========================================
+        // 3. ЗВУК ТА ОЗВУЧКА
+        // ==========================================
+        function speak(text) {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                const utter = new SpeechSynthesisUtterance(text);
+                utter.lang = 'en-US';
+                utter.rate = 0.92;
+                window.speechSynthesis.speak(utter);
+            }
+        }
+
+        function playTone(type) {
+            try {
+                if (Tone.context.state !== 'running') Tone.start();
+                const synth = new Tone.Synth().toDestination();
+                if (type === 'ok') {
+                    synth.triggerAttackRelease("E5", "16n");
+                } else if (type === 'err') {
+                    synth.triggerAttackRelease("G3", "8n");
+                } else {
+                    synth.triggerAttackRelease("C5", "32n");
+                }
+            } catch (e) {}
+        }
+
+        function addScore(pts) {
+            score += pts;
+            document.getElementById('score-display').textContent = score;
+        }
+
+        // ==========================================
+        // 4. НАВІГАЦІЯ
+        // ==========================================
+        function switchTab(tab) {
+            playTone('click');
+            ['warmup', 'vocab', 'reading', 'practice', 'speaking'].forEach(t => {
+                document.getElementById(`sec-${t}`).classList.add('hidden');
+                document.getElementById(`tab-${t}`).className = 'px-3 py-1.5 rounded-lg font-semibold text-xs sm:text-sm transition text-slate-300 hover:bg-slate-800';
+            });
+            document.getElementById(`sec-${tab}`).classList.remove('hidden');
+            document.getElementById(`tab-${tab}`).className = 'px-3 py-1.5 rounded-lg font-semibold text-xs sm:text-sm transition bg-indigo-600 text-white shadow';
+        }
+
+        // ==========================================
+        // 5. ВКЛАДКА 1: WARM-UP
+        // ==========================================
+        function renderWarmup() {
+            const container = document.getElementById('warmup-cards');
+            const slice = [];
+            for (let i = 0; i < 4; i++) {
+                slice.push(warmupPool[(warmupOffset + i) % warmupPool.length]);
+            }
+
+            container.innerHTML = slice.map((item, idx) => `
+                <div class="bg-slate-900/90 border border-slate-700 rounded-xl p-4 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-start justify-between gap-2">
+                            <p class="text-sm sm:text-base font-bold text-white">${item.en}</p>
+                            <button onclick="speak('${item.en}')" class="text-indigo-400 hover:text-indigo-300 text-sm shrink-0">🔊</button>
+                        </div>
+                        <p class="text-xs text-slate-400 mt-1">${item.ua}</p>
+                    </div>
+                    <div class="mt-3 pt-2 border-t border-slate-800 text-xs text-emerald-400 font-mono">
+                        Шаблон: ${item.hint}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function shuffleWarmup() {
+            playTone('click');
+            warmupOffset = (warmupOffset + 2) % warmupPool.length;
+            renderWarmup();
+        }
+
+        function renderPrepBlitz() {
+            const grid = document.getElementById('prep-blitz-grid');
+            grid.innerHTML = prepBlitzItems.map((item, idx) => `
+                <div id="pblitz-${idx}" class="bg-slate-800 border border-slate-700 rounded-xl p-2.5 flex items-center justify-between gap-2">
+                    <span class="text-xs sm:text-sm font-bold text-white">${item.word}</span>
+                    <div class="flex gap-1">
+                        <button onclick="checkBlitz(${idx}, 'IN')" class="px-2 py-1 rounded bg-slate-700 hover:bg-slate-600 text-xs font-extrabold text-slate-200">IN</button>
+                        <button onclick="checkBlitz(${idx}, 'ON')" class="px-2 py-1 rounded bg-slate-700 hover:bg-slate-600 text-xs font-extrabold text-slate-200">ON</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function checkBlitz(idx, choice) {
+            const item = prepBlitzItems[idx];
+            const box = document.getElementById(`pblitz-${idx}`);
+            if (item.correct === choice) {
+                playTone('ok');
+                addScore(2);
+                speak(`${choice.toLowerCase()} ${item.word}`);
+                box.className = 'bg-emerald-950/70 border border-emerald-500 rounded-xl p-2.5 flex items-center justify-between gap-2';
+                box.innerHTML = `<span class="text-xs sm:text-sm font-extrabold text-emerald-300">${choice.toLowerCase()} ${item.word}</span><span>✅</span>`;
+            } else {
+                playTone('err');
+                box.classList.add('border-rose-500');
+                setTimeout(() => box.classList.remove('border-rose-500'), 600);
+            }
+        }
+
+        // ==========================================
+        // 6. ВКЛАДКА 2: ЧАС ТА РУТИНА
+        // ==========================================
+        function setClock(time, textEn, example) {
+            playTone('click');
+            document.getElementById('clock-display').textContent = time;
+            document.getElementById('clock-text-en').textContent = textEn;
+            document.getElementById('clock-example').textContent = `"${example}"`;
+            speak(example);
+        }
+
+        function renderRoutine() {
+            const grid = document.getElementById('routine-grid');
+            grid.innerHTML = routineVerbs.map(v => `
+                <div onclick="speak('${v.en}. ${v.ex}')" class="bg-slate-800 hover:bg-slate-750 border border-slate-700 hover:border-cyan-500/60 rounded-xl p-3.5 cursor-pointer transition btn-active flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-1">
+                            <span class="text-xl">${v.icon}</span>
+                            <span class="text-xs text-slate-500">🔊</span>
+                        </div>
+                        <div class="text-base font-bold text-white">${v.en}</div>
+                        <div class="text-xs text-slate-400">${v.ua}</div>
+                    </div>
+                    <div class="mt-3 pt-2 border-t border-slate-700/80 text-xs text-cyan-300 italic">
+                        "${v.ex}"
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // ==========================================
+        // 7. ВКЛАДКА 3: ЧИТАННЯ
+        // ==========================================
+        function speakReading() {
+            const txt = document.getElementById('reading-text').innerText;
+            speak(txt);
+        }
+
+        function renderReadingQs() {
+            const list = document.getElementById('reading-q-list');
+            list.innerHTML = readingQs.map((item, i) => `
+                <div class="bg-slate-900 border border-slate-700 rounded-xl p-3.5">
+                    <div class="flex items-start justify-between gap-2">
+                        <p class="text-sm font-bold text-white">${item.q}</p>
+                        <button onclick="speak('${item.q.replace(/^\d+\.\s*/, '')}')" class="text-xs text-indigo-400 hover:text-indigo-300 shrink-0">🔊</button>
+                    </div>
+                    <button onclick="document.getElementById('r-hint-${i}').classList.toggle('hidden')" class="mt-2 text-xs text-cyan-400 hover:underline font-medium">
+                        💡 Підказка схеми відповіді
+                    </button>
+                    <p id="r-hint-${i}" class="hidden mt-1.5 text-xs text-slate-300 bg-slate-800 p-2 rounded-lg border border-slate-700">
+                        ${item.hint}
+                    </p>
+                </div>
+            `).join('');
+        }
+
+        // ==========================================
+        // 8. ВКЛАДКА 4: ПРАКТИКА РЕЧЕНЬ
+        // ==========================================
+        function switchPracticeTab(sub) {
+            playTone('click');
+            practiceSubTab = sub;
+            ['unscramble', 'preps', 'prompts'].forEach(s => {
+                document.getElementById(`pview-${s}`).classList.add('hidden');
+                document.getElementById(`ptab-${s}`).className = 'px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold bg-slate-900 text-slate-300 hover:bg-slate-700';
+            });
+            document.getElementById(`pview-${sub}`).classList.remove('hidden');
+            document.getElementById(`ptab-${sub}`).className = 'px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold bg-indigo-600 text-white';
+
+            if (sub === 'unscramble') loadUns();
+            if (sub === 'preps') loadPrepTask();
+            if (sub === 'prompts') loadPrompt();
+        }
+
+        // --- Підрежим 1: Unscramble ---
+        function loadUns() {
+            const task = unscrambleList[unsIdx % unscrambleList.length];
+            document.getElementById('practice-counter').textContent = `${(unsIdx % unscrambleList.length) + 1} / ${unscrambleList.length}`;
+            document.getElementById('uns-ua').textContent = task.ua;
+            selectedUns = [];
+            bankUns = [...task.words].sort(() => Math.random() - 0.5);
+            document.getElementById('uns-feedback').classList.add('hidden');
+            renderUns();
+        }
+
+        function renderUns() {
+            const drop = document.getElementById('uns-drop');
+            const bank = document.getElementById('uns-bank');
+
+            drop.innerHTML = selectedUns.length === 0
+                ? `<span class="text-slate-500 text-sm">Натискай на блоки слів знизу...</span>`
+                : selectedUns.map((w, i) => `<button onclick="remUns(${i})" class="px-3.5 py-2 bg-indigo-600 text-white font-bold rounded-lg text-sm sm:text-base shadow btn-active">${w}</button>`).join('');
+
+            bank.innerHTML = bankUns.map((w, i) => `<button onclick="addUns(${i})" class="px-3.5 py-2 bg-slate-700 hover:bg-slate-600 border border-slate-500 text-white font-semibold rounded-lg text-sm sm:text-base btn-active">${w}</button>`).join('');
+        }
+
+        function addUns(i) {
+            playTone('click');
+            const w = bankUns.splice(i, 1)[0];
+            speak(w);
+            selectedUns.push(w);
+            renderUns();
+        }
+
+        function remUns(i) {
+            playTone('click');
+            bankUns.push(selectedUns.splice(i, 1)[0]);
+            renderUns();
+        }
+
+        function resetUns() {
+            playTone('click');
+            loadUns();
+        }
+
+        function checkUns() {
+            const task = unscrambleList[unsIdx % unscrambleList.length];
+            const userStr = selectedUns.join(' ');
+            const targetStr = task.words.join(' ');
+            const fb = document.getElementById('uns-feedback');
+            fb.className = 'p-3.5 rounded-xl text-center text-sm font-bold';
+
+            if (userStr === targetStr) {
+                playTone('ok');
+                addScore(10);
+                speak(targetStr);
+                fb.textContent = `✅ Супер! "${targetStr}" (+10 балів)`;
+                fb.classList.add('bg-emerald-950', 'text-emerald-300', 'border', 'border-emerald-500');
+                setTimeout(() => { unsIdx++; loadUns(); }, 2000);
+            } else {
+                playTone('err');
+                fb.textContent = '❌ Спробуй інший порядок: Хто + Дія + Час (at) + День (on).';
+                fb.classList.add('bg-rose-950', 'text-rose-300', 'border', 'border-rose-500');
+            }
+        }
+
+        // --- Підрежим 2: IN / ON / AT ---
+        function loadPrepTask() {
+            const task = prepPracticeList[prepIdx % prepPracticeList.length];
+            document.getElementById('practice-counter').textContent = `${(prepIdx % prepPracticeList.length) + 1} / ${prepPracticeList.length}`;
+            document.getElementById('prep-sentence').innerHTML = `${task.before} <span class="text-amber-400 underline">___</span> ${task.after}`;
+            document.getElementById('prep-ua').textContent = task.ua;
+            document.getElementById('prep-feedback').classList.add('hidden');
+        }
+
+        function checkPrepChoice(choice) {
+            const task = prepPracticeList[prepIdx % prepPracticeList.length];
+            const fb = document.getElementById('prep-feedback');
+            fb.className = 'p-3.5 rounded-xl text-center text-sm font-bold';
+
+            if (choice === task.ans) {
+                playTone('ok');
+                addScore(5);
+                const full = `${task.before} ${task.ans} ${task.after}`;
+                speak(full);
+                fb.textContent = `✅ Правильно! "${full}" (+5 балів)`;
+                fb.classList.add('bg-emerald-950', 'text-emerald-300', 'border', 'border-emerald-500');
+                setTimeout(() => { prepIdx++; loadPrepTask(); }, 1800);
+            } else {
+                playTone('err');
+                fb.textContent = '❌ Не зовсім! Пам’ятай: IN — місяці/сезони, ON — дні тижня, AT — точний час.';
+                fb.classList.add('bg-rose-950', 'text-rose-300', 'border', 'border-rose-500');
+            }
+        }
+
+        // --- Підрежим 3: Prompts ---
+        function loadPrompt() {
+            const task = promptPracticeList[promptIdx % promptPracticeList.length];
+            document.getElementById('practice-counter').textContent = `${(promptIdx % promptPracticeList.length) + 1} / ${promptPracticeList.length}`;
+            document.getElementById('prompt-chips').innerHTML = task.chips.map(c => `<span class="px-3.5 py-2 rounded-xl bg-slate-800 border border-slate-600 text-sm font-bold text-white">${c}</span>`).join('');
+            document.getElementById('prompt-input').value = '';
+            const ex = document.getElementById('prompt-example');
+            ex.classList.add('hidden');
+            ex.innerHTML = `<strong>Приклад:</strong> ${task.ex}`;
+        }
+
+        function togglePromptExample() {
+            document.getElementById('prompt-example').classList.toggle('hidden');
+        }
+
+        function nextPrompt() {
+            playTone('click');
+            addScore(5);
+            promptIdx++;
+            loadPrompt();
+        }
+
+        // ==========================================
+        // 9. ВКЛАДКА 5: SPEAKING КОНСТРУКТОР ДНЯ
+        // ==========================================
+        function setScheduleDay(day) {
+            playTone('click');
+            scheduleDay = day;
+            ['Monday', 'Saturday'].forEach(d => {
+                document.getElementById(`sday-${d}`).className = d === day
+                    ? 'px-3 py-1 rounded-lg text-xs font-bold bg-indigo-600 text-white'
+                    : 'px-3 py-1 rounded-lg text-xs font-bold text-slate-400 hover:text-white';
+            });
+            updateScheduleStory();
+        }
+
+        function renderScheduleBuilder() {
+            const rows = [
+                { key: 'wake', label: 'I wake up at', times: ['7:00', '7:30', '8:00', '9:00', '10:30', '11:00'] },
+                { key: 'breakfast', label: 'I have breakfast at', times: ['7:30', '8:00', '8:30', '9:30', '11:00', '11:30'] },
+                { key: 'start', label: 'I start work / activities at', times: ['9:00', '9:30', '10:00', '11:00', '12:00'] },
+                { key: 'lunch', label: 'I have lunch at', times: ['1:00 PM', '1:30 PM', '2:00 PM', '2:30 PM', '3:00 PM'] },
+                { key: 'finish', label: 'I finish work at', times: ['5:00 PM', '6:00 PM', '6:30 PM', '7:00 PM', '8:00 PM'] },
+                { key: 'sleep', label: 'I go to sleep at', times: ['10:30 PM', '11:00 PM', '11:30 PM', '12:00 AM', '1:00 AM'] }
+            ];
+
+            document.getElementById('schedule-rows').innerHTML = rows.map(r => `
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 bg-slate-900/90 p-2.5 px-3.5 rounded-xl border border-slate-700">
+                    <span class="text-sm font-bold text-slate-200">${r.label}</span>
+                    <select onchange="updateScheduleTime('${r.key}', this.value)" class="bg-slate-800 border border-slate-600 rounded-lg px-3 py-1.5 text-sm font-bold text-cyan-300 focus:outline-none focus:border-indigo-500">
+                        ${r.times.map(t => `<option value="${t}" ${scheduleTimes[r.key] === t ? 'selected' : ''}>${t}</option>`).join('')}
+                    </select>
+                </div>
+            `).join('');
+
+            updateScheduleStory();
+        }
+
+        function updateScheduleTime(key, val) {
+            scheduleTimes[key] = val;
+            updateScheduleStory();
+        }
+
+        function updateScheduleStory() {
+            const s = scheduleTimes;
+            let text = `On ${scheduleDay}, I wake up at ${s.wake} and have breakfast at ${s.breakfast}. `;
+            if (scheduleDay === 'Monday') {
+                text += `I start work at ${s.start} and have lunch at ${s.lunch}. I finish work at ${s.finish}. In the evening, I relax and go to sleep at ${s.sleep}.`;
+            } else {
+                text += `I don't work on Saturday! I have lunch at ${s.lunch}. In the evening, I meet friends or watch movies, and I go to sleep at ${s.sleep}.`;
+            }
+            document.getElementById('schedule-story').textContent = text;
+        }
+
+        function speakScheduleStory() {
+            speak(document.getElementById('schedule-story').textContent);
+        }
+
+        function nextIntQ() {
+            playTone('click');
+            intQIdx = (intQIdx + 1) % interviewQs.length;
+            const q = interviewQs[intQIdx];
+            document.getElementById('int-q-en').textContent = q.en;
+            document.getElementById('int-q-ua').textContent = q.ua;
+            speak(q.en);
+        }
+
+        function speakCurrentIntQ() {
+            speak(interviewQs[intQIdx].en);
+        }
+
+        // ==========================================
+        // СТАРТ
+        // ==========================================
+        window.onload = function() {
+            renderWarmup();
+            renderPrepBlitz();
+            renderRoutine();
+            renderReadingQs();
+            loadUns();
+            renderScheduleBuilder();
+        };
+    </script>
+</body>
+</html>
